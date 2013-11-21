@@ -41,8 +41,17 @@
     <Reference Include="Nowin">
       <HintPath>..\packages\Nowin.0.11.0.0\lib\net45\Nowin.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.Owin.Static">
+      <HintPath>..\packages\Simple.Owin.Static.0.1.1.51912\lib\net45\Simple.Owin.Static.dll</HintPath>
+    </Reference>
     <Reference Include="Simple.Web">
       <HintPath>..\packages\Simple.Web.0.11.0.51719\lib\net40\Simple.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Web.JsonNet">
+      <HintPath>..\packages\Simple.Web.JsonNet.0.11.0.51719\lib\net40\Simple.Web.JsonNet.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Web.Razor">
+      <HintPath>..\packages\Simple.Web.Razor.0.11.0.51719\lib\net40\Simple.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -61,12 +70,55 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Index.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="assets\fonts\glyphicons-halflings-regular.eot">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\fonts\glyphicons-halflings-regular.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="assets\fonts\glyphicons-halflings-regular.woff">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
+    <None Include="Views\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="assets\css\site.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap-theme.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap-theme.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\css\bootstrap.min.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\jquery-2.0.3.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\bootstrap.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NestDemo
 {
@@ -22,7 +18,10 @@ namespace NestDemo
 
         static void Main(string[] args)
         {
+            var staticBuilder = Simple.Owin.Static.Statics.AddFolder("/assets").AddFolder("/app");
+
             var app = new Fixer()
+                .Use(staticBuilder.Build())
                 .Use(Application.Run)
                 .Build();
 
