@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
-using NestDemo.Model;
 
-namespace NestDemo.CreateIndex
+namespace NestDemo.Model
 {
     public class CustomerRepository
     {
@@ -30,11 +29,13 @@ SELECT CustomerID, CompanyName, ContactName, Address, City, Country FROM Custome
                 {
                     var sets = connection.QueryMultiple(getCustomersSql + getProductsSql);
                     var customers = sets.Read<Customer>().ToDictionary(y => y.CustomerID, y => y);
+                    var customerProdMapping = customers.ToDictionary(y => y.Key, y => new List<Product>());
                     var products = sets.Read((string cId, Product p) =>
                     {
-                        customers[cId].Products.Add(p);
+                        customerProdMapping[cId].Add(p);
                         return p;
                     }, splitOn: "UnitPrice");
+                    customerProdMapping.ToList().ForEach(y => customers[y.Key].Products = y.Value.ToArray());
                     return customers.Values;
                 }
                 catch (Exception ex)

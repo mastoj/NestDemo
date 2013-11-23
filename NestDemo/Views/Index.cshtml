@@ -10,7 +10,7 @@
     <link href="/assets/css/site.css" rel="stylesheet">
 </head>
 
-<body>
+<body ng-app="app">
 
     <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
         <div class="container">
@@ -33,18 +33,24 @@
         </div>
     </div>
 
-    <div class="container">
+    <div class="container" ng-view>
+    </div>
 
+    <script type="text/ng-template" id="search.html">
         <div class="starter-template">
-            <h1>Bootstrap starter template</h1>
+            <h1>Awesome Nest demo!</h1>
             <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
         </div>
+        <div class="pull-right">
+            <button class="btn btn-primary" ng-click="createIndex()">Create index</button>
+            <button class="btn btn-danger" ng-click="deleteIndex()">Delete index</button>
+        </div>
+    </script>
 
-    </div><!-- /.container -->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="/assets/js/jquery-2.0.3.min.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>
+    <script src="/assets/js/angular.min.js"></script>
+    <script src="/assets/js/angular-route.min.js"></script>
+    <script src="/app/app.js"></script>
 </body>
 </html>

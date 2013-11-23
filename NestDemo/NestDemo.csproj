@@ -76,10 +76,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CreateIndex\CustomerRepository.cs" />
+    <Compile Include="api\Index\DeleteEndpoint.cs" />
+    <Compile Include="Settings.cs" />
+    <Compile Include="Model\CustomerRepository.cs" />
     <Compile Include="ElasticSearch\ElasticClientWrapper.cs" />
     <Compile Include="Model\Customer.cs" />
-    <Compile Include="CreateIndex\PostEndpoint.cs" />
+    <Compile Include="api\Index\PostEndpoint.cs" />
     <Compile Include="Model\Product.cs" />
     <Compile Include="Index.cs" />
     <Compile Include="Program.cs" />
@@ -100,9 +102,12 @@
     <None Include="Views\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="app\" />
+    <Folder Include="api\deleteindex\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\app.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\css\site.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -119,6 +124,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\fonts\glyphicons-halflings-regular.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\angular-route.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\angular.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\js\jquery-2.0.3.min.js">
