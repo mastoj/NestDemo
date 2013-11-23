@@ -13,3 +13,12 @@ body {
     background-color: #dddddd;
     cursor: pointer;
 }
+
+.panel-group {
+    overflow-y: hidden;
+}
+
+.fixed-panel {
+    height: 150px;
+    overflow-y: scroll;
+}

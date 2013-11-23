@@ -34,10 +34,11 @@ namespace NestDemo.api.Search
             {
                 return searchDescriptor(fd
                     .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].ProductName).Size(1000))
-                    .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000)));
+                    .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000))
+                    .FacetTerm(y => y.OnField(c => c.Country).Size(1000)));
             };
 
-            Output = _client.Search(searchDescriptor);
+            Output = _client.Search(facetDescriptor);
             return Status.OK;
         }
 

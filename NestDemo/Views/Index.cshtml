@@ -56,8 +56,15 @@
                     <div class="form-group">
                         <input type="query" class="form-control" id="query" ng-model="search.Query" placeholder="Search">
                     </div>
+                    <button ng-hide="showFilter" ng-click="showFilter = true" class="btn btn-default">Filter <span class="glyphicon glyphicon-chevron-down"></span></button>
+                    <button ng-show="showFilter" ng-click="showFilter = false" class="btn btn-default">Filter <span class="glyphicon glyphicon-chevron-up"></span></button>
                 </div>
             </div>
+        </div>
+        <div ng-show="showFilter">
+            <search-filter filter="searchResult.facets['products.productName']" title="Products" on-select="productSelected(item)"></search-filter>
+            <search-filter filter="searchResult.facets['products.categoryName']" title="Categories" on-select="productSelected(item)"></search-filter>
+            <search-filter filter="searchResult.facets['country']" title="Countries" on-select="productSelected(item)"></search-filter>
         </div>
         <div class="panel-group">
             <div class="panel panel-default" ng-repeat="customer in searchResult.documents">
@@ -90,13 +97,14 @@
                                 <td>{{(product.unitPrice * product.totalQuantity) | currency}}</td>
                                 <td>{{product.categoryName}}</td>
                             </tr>
-                        </table> 
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <button class="btn bt-default" ng-click="search.NumberToTake = search.NumberToTake + 25">More</button>
                 <button class="btn bt-default" ng-click="showDebug = true" ng-hide="showDebug">Show response</button>
                 <button class="btn bt-default" ng-click="showDebug = false" ng-hide="!showDebug">Hide response</button>
             </div>
@@ -104,6 +112,28 @@
         <div class="row">
             <div class="col-lg-12">
                 <pre ng-show="showDebug">{{searchResult | json}}</pre>
+            </div>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="searchFilter.html">
+        <div>
+            <h4>{{title}}</h4>
+            <div class="row">
+                <div class="col-lg-6 panel-group">
+                    <div class="fixed-panel">
+                        <div class="panel panel-default" ng-repeat="item in filter.terms">
+                            <div class="panel-heading" ng-click="selectItem(item.term)">{{item.term}} ({{item.count}})</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 panel-group">
+                    <div class="fixed-panel">
+                        <div class="panel panel-default" ng-repeat="item in filter.terms">
+                            <div class="panel-heading">{{item.term}}</div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </script>

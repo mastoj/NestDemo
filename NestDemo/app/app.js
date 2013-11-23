@@ -10,34 +10,33 @@
             otherwise({ redirectTo: "/" });
     }]);
 
+    app.value('toastr', toastr);
+    app.directive('searchFilter', searchFilter);
     app.controller('SearchCtrl', SearchCtrl);
 
-    app.value('toastr', toastr);
-
-    app.factory("toastService", ['toastr', function (toastr) {
+    function searchFilter() {
         return {
-            toastNow: function (message) {
-                switch (message.type) {
-                    case 'success':
-                        toastr.success(message.body, message.title);
-                        break;
-                    case 'info':
-                        toastr.info(message.body, message.title);
-                        break;
-                    case 'warning':
-                        toastr.warning(message.body, message.title);
-                        break;
-                    case 'error':
-                        toastr.error(message.body, message.title);
-                        break;
-                }
+            restrict: 'E',
+            replace: false,
+            templateUrl: 'searchFilter.html',
+            link: function (scope, element) {
+                scope.selectItem = function(item) {
+                    alert(item + " directive");
+                    scope.onSelect({ item: item });
+                };
+            },
+            scope: {
+                title: '@',
+                filter: '=',
+                onSelect: '&'
             }
         };
-    }]);
+    }
 
     function SearchCtrl($scope, $http, toastr) {
         $scope.search = {
-            Query: ""
+            Query: "",
+            NumberToTake: 10
         };
         $scope.createIndex = function () {
             $scope.updatingIndex = true;
@@ -53,7 +52,11 @@
                 $scope.updatingIndex = false;
             }).error(function () { toastr.error("Index NOT deleted", "Oh no!"); });
         };
-        
+
+        $scope.productSelected = function(item) {
+            alert(item);
+        };
+
         $scope.$watch('search', function () {
             $http.post("api/search", $scope.search).success(function (data) {
                 $scope.searchResult = data;
