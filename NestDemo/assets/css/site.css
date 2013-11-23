@@ -5,6 +5,11 @@ body {
     padding: 40px 15px;
     text-align: center;
 }
-.row {
+.row, .panel-group .panel {
     margin-bottom: 15px;
+}
+
+.panel-heading:hover {
+    background-color: #dddddd;
+    cursor: pointer;
 }

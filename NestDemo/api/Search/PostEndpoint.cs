@@ -25,9 +25,9 @@ namespace NestDemo.api.Search
                     {
                         if (Input.Query != null)
                         {
-                            bq.QueryString(y => y.Query(Input.Query));
+                            fq.Query(_ => _.QueryString(y => y.Query(Input.Query)));
                         }
-                    }));
+                    })).Size(Input.NumberToTake.Value);
 
             
             Func<SearchDescriptor<Customer>, SearchDescriptor<Customer>> facetDescriptor = fd =>
@@ -37,7 +37,7 @@ namespace NestDemo.api.Search
                     .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000)));
             };
 
-            Output = _client.Search(facetDescriptor);
+            Output = _client.Search(searchDescriptor);
             return Status.OK;
         }
 
@@ -47,6 +47,13 @@ namespace NestDemo.api.Search
 
     public class SearchModel
     {
+        private int? _numberToTake;
         public string Query { get; set; }
+
+        public int? NumberToTake
+        {
+            get { return _numberToTake.HasValue ? _numberToTake.Value : 25; }
+            set { _numberToTake = value; }
+        }
     }
 }
