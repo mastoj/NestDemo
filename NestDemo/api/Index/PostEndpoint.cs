@@ -32,7 +32,6 @@ namespace NestDemo.CreateIndex
             _client.CreateIndex(nextIndex, s => s.AddMapping<Customer>(m => m.MapFromAttributes()));
             _client.IndexMany(customers, nextIndex);
 
-            _client.RemoveAlias(Settings.Alias);
             _client.Alias(nextIndex, Settings.Alias);
             CleanUpIndices(nextIndex);
         }

@@ -76,6 +76,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="api\Search\PostEndpoint.cs" />
     <Compile Include="api\Index\DeleteEndpoint.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Model\CustomerRepository.cs" />
@@ -101,9 +102,7 @@
     <None Include="packages.config" />
     <None Include="Views\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="api\deleteindex\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="app\app.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -123,6 +122,9 @@
     <Content Include="assets\css\bootstrap.min.css">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="assets\css\toastr.css">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="assets\fonts\glyphicons-halflings-regular.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -139,6 +141,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="assets\js\bootstrap.min.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="assets\js\toastr.min.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

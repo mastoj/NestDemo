@@ -11,11 +11,12 @@ namespace NestDemo.Model
         public IEnumerable<Customer> GetCustomers()
         {
             var getProductsSql = @"
-SELECT c.CustomerID, max(od.UnitPrice) as UnitPrice, sum(od.Quantity) as TotalQuantity, ProductName FROM Customers c
+SELECT c.CustomerID, max(od.UnitPrice) as UnitPrice, sum(od.Quantity) as TotalQuantity, p.ProductName, ca.CategoryName FROM Customers c
 INNER JOIN Orders o ON c.CustomerId = o.CustomerId
 INNER JOIN [Order Details] od ON od.OrderID = o.OrderID
 INNER JOIN Products p ON p.ProductID = od.ProductID
-GROUP BY c.CustomerID, p.ProductName
+INNER JOIN Categories ca ON ca.CategoryID = p.CategoryID
+GROUP BY c.CustomerID, p.ProductName, ca.CategoryName
 ORDER BY c.CustomerID
 
 ";
