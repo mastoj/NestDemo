@@ -117,21 +117,17 @@
     </script>
 
     <script type="text/ng-template" id="searchFilter.html">
-        <div>
+        <div class="search-filter">
             <h4>{{title}}</h4>
             <div class="row">
                 <div class="col-lg-6 panel-group">
                     <div class="fixed-panel">
-                        <div class="panel panel-default" ng-repeat="item in filter.terms">
-                            <div class="panel-heading" ng-click="selectItem(item.term)">{{item.term}} ({{item.count}})</div>
-                        </div>
+                        <button ng-repeat="item in filter.terms | filter:filterFunction | orderBy:'term'" class="btn btn-default" ng-click="selectItem(item)">{{item.term}} ({{item.count}}) <span class="glyphicon glyphicon-plus"></span></button>
                     </div>
                 </div>
-                <div class="col-lg-6 panel-group">
+                <div class="panel-group col-lg-6">
                     <div class="fixed-panel">
-                        <div class="panel panel-default" ng-repeat="item in filter.terms">
-                            <div class="panel-heading">{{item.term}}</div>
-                        </div>
+                        <button ng-repeat="item in selectedItems | orderBy:'term'" class="btn btn-default" ng-click="deselectItem(item)">{{item.term}} <span class="glyphicon glyphicon-minus"></span></button>
                     </div>
                 </div>
             </div>

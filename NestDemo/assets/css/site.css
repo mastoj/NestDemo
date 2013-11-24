@@ -22,3 +22,8 @@ body {
     height: 150px;
     overflow-y: scroll;
 }
+
+.search-filter button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+}

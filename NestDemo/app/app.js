@@ -20,9 +20,23 @@
             replace: false,
             templateUrl: 'searchFilter.html',
             link: function (scope, element) {
-                scope.selectItem = function(item) {
-                    alert(item + " directive");
+                scope.selectedItems = [];
+                scope.selectItem = function (item) {
+                    scope.selectedItems.push(item);
                     scope.onSelect({ item: item });
+                };
+                scope.deselectItem = function(item) {
+                    var index = scope.selectedItems.indexOf(item);
+                    scope.selectedItems.splice(index, 1);
+                };
+                scope.filterFunction = function(item) {
+                    for (var selectedIndex in scope.selectedItems) {
+                        var selectedItem = scope.selectedItems[selectedIndex];
+                        if (selectedItem.term === item.term) {
+                            return null;
+                        }
+                    }
+                    return item;
                 };
             },
             scope: {
@@ -54,7 +68,6 @@
         };
 
         $scope.productSelected = function(item) {
-            alert(item);
         };
 
         $scope.$watch('search', function () {
