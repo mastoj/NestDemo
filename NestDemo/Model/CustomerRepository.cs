@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using Dapper;
@@ -23,7 +24,7 @@ ORDER BY c.CustomerID
             var getCustomersSql = @"
 SELECT CustomerID, CompanyName, ContactName, Address, City, Country FROM Customers
 ";
-            var connectionString = @"Data Source=(local)\SQLExpress;Integrated Security=SSPI;Database=NORTHWND";
+            var connectionString = Settings.NorthwndConnectionString;
             using (var connection = new SqlConnection(connectionString))
             {
                 try

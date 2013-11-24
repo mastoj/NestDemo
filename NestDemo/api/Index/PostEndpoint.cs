@@ -56,7 +56,8 @@ namespace NestDemo.CreateIndex
 
         private int GetCurrentIndexNumber()
         {
-            var index = _client.GetIndicesPointingToAlias(Settings.Alias).ToList();
+            var indices = _client.GetIndicesPointingToAlias(Settings.Alias);//.ToList();
+            var index = indices.ToList();
             var indexNumber = index.Count > 0
                 ? index.Max(y =>
                 {

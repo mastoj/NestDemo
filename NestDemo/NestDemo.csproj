@@ -60,6 +60,7 @@
       <HintPath>..\packages\Simple.Web.Razor.0.11.0.51719\lib\net40\Simple.Web.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <Private>True</Private>
