@@ -5,9 +5,6 @@ namespace NestDemo.Model
 {
     public class Customer
     {
-        public Customer()
-        {
-        }
         public string CustomerID { get; set; }
         public string CompanyName { get; set; }
         public string Address { get; set; }

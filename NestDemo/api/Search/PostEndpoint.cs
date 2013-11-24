@@ -22,22 +22,22 @@ namespace NestDemo.api.Search
 
         public Status Post()
         {
-            Func<SearchDescriptor<Customer>, SearchDescriptor<Customer>> searchDescriptor = sd =>
+            Func<SearchDescriptor<Customer>, SearchDescriptor<Customer>> searcher = sd =>
                 sd.Query(bq =>
                     bq.Filtered(fq =>
                     {
                         if (!string.IsNullOrEmpty(Input.Query))
                         {
-                            fq.Query(_ => _.QueryString(y => y.Query(Input.Query)));
+                            fq.Query(qs => qs.QueryString(y => y.Query(Input.Query)));
                         }
                         else
                         {
-                            fq.Query(_ => _.MatchAll());
+                            fq.Query(qs => qs.MatchAll());
                         }
                         if (Input.Filter.Count > 0)
                         {
                             var filters = Input.Filter.Select(_ => FilterDesc[_.Key](_.Value)).ToArray();
-                            fq.Filter(_ => _.And(filters));
+                            fq.Filter(sel => sel.And(filters));
                         }
 
                     })).Size(Input.NumberToTake.Value);
@@ -45,10 +45,10 @@ namespace NestDemo.api.Search
 
             Func<SearchDescriptor<Customer>, SearchDescriptor<Customer>> facetDescriptor = fd =>
             {
-                return searchDescriptor(fd
-                    .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].ProductName).Size(1000))
-                    .FacetTerm(ft => ft.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000))
-                    .FacetTerm(y => y.OnField(c => c.Country).Size(1000)));
+                return searcher(fd
+                    .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].ProductName).Size(1000))
+                    .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000))
+                    .FacetTerm(f => f.OnField(c => c.Country).Size(1000)));
             };
 
             Output = _client.Search(facetDescriptor);
@@ -70,8 +70,8 @@ namespace NestDemo.api.Search
 
         private static BaseFilter AddProductsFilter(IEnumerable<string> items, Expression<Func<Customer, object>> propExpr)
         {
-            return Filter<Customer>.Nested(_ => _
-                .Path(__ => __.Products)
+            return Filter<Customer>.Nested(sel => sel
+                .Path(c => c.Products)
                 .Query(q => q.Terms(propExpr, items.ToArray())));
         }
 
