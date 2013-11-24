@@ -23,11 +23,12 @@
                 scope.selectedItems = [];
                 scope.selectItem = function (item) {
                     scope.selectedItems.push(item);
-                    scope.onSelect({ item: item });
+                    scope.onFilterAdd({ item: item });
                 };
                 scope.deselectItem = function(item) {
                     var index = scope.selectedItems.indexOf(item);
                     scope.selectedItems.splice(index, 1);
+                    scope.onFilterRemove({ item: item });
                 };
                 scope.filterFunction = function(item) {
                     for (var selectedIndex in scope.selectedItems) {
@@ -42,7 +43,8 @@
             scope: {
                 title: '@',
                 filter: '=',
-                onSelect: '&'
+                onFilterAdd: '&',
+                onFilterRemove: '&'
             }
         };
     }
@@ -50,6 +52,7 @@
     function SearchCtrl($scope, $http, toastr) {
         $scope.search = {
             Query: "",
+            Filter: {},
             NumberToTake: 10
         };
         $scope.createIndex = function () {
@@ -67,7 +70,19 @@
             }).error(function () { toastr.error("Index NOT deleted", "Oh no!"); });
         };
 
-        $scope.productSelected = function(item) {
+        $scope.filterAdded = function (item, facetName) {
+            var selectedItems = [];
+            if ($scope.search.Filter.hasOwnProperty(facetName)) {
+                selectedItems = $scope.search.Filter[facetName];
+            }
+            selectedItems.push(item.term);
+            $scope.search.Filter[facetName] = selectedItems;
+        };
+
+        $scope.filterRemoved = function (item, facetName) {
+            var selectedItems = $scope.search.Filter[facetName];
+            var index = selectedItems.indexOf(item);
+            selectedItems.splice(index, 1);
         };
 
         $scope.$watch('search', function () {

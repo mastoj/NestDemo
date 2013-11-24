@@ -22,15 +22,8 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Project name</a>
+                <a class="navbar-brand" href="#">Elasticsearch NEST demo</a>
             </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#about">About</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
         </div>
     </div>
 
@@ -38,10 +31,6 @@
     </div>
 
     <script type="text/ng-template" id="search.html">
-        <div class="starter-template">
-            <h1>Awesome Nest demo!</h1>
-            <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-        </div>
         <div class="row">
             <div class="col-lg-12">
                 <div class="pull-right">
@@ -61,10 +50,10 @@
                 </div>
             </div>
         </div>
-        <div ng-show="showFilter">
-            <search-filter filter="searchResult.facets['products.productName']" title="Products" on-select="productSelected(item)"></search-filter>
-            <search-filter filter="searchResult.facets['products.categoryName']" title="Categories" on-select="productSelected(item)"></search-filter>
-            <search-filter filter="searchResult.facets['country']" title="Countries" on-select="productSelected(item)"></search-filter>
+        <div ng-show="showFilter" class="row">
+            <search-filter filter="searchResult.facets['products.productName']" title="Products" on-filter-add="filterAdded(item, 'products.productName')" on-filter-remove="    filterRemoved(item, 'products.productName')"></search-filter>
+            <search-filter filter="searchResult.facets['products.categoryName']" title="Categories" on-filter-add="filterAdded(item, 'products.categoryName')" on-filter-remove="    filterRemoved(item, 'products.categoryName')"></search-filter>
+            <search-filter filter="searchResult.facets['country']" title="Countries" on-filter-add="filterAdded(item, 'country')" on-filter-remove="filterRemoved(item, 'country')"></search-filter>
         </div>
         <div class="panel-group">
             <div class="panel panel-default" ng-repeat="customer in searchResult.documents">
@@ -117,17 +106,17 @@
     </script>
 
     <script type="text/ng-template" id="searchFilter.html">
-        <div class="search-filter">
+        <div class="search-filter col-lg-4">
             <h4>{{title}}</h4>
             <div class="row">
                 <div class="col-lg-6 panel-group">
                     <div class="fixed-panel">
-                        <button ng-repeat="item in filter.terms | filter:filterFunction | orderBy:'term'" class="btn btn-default" ng-click="selectItem(item)">{{item.term}} ({{item.count}}) <span class="glyphicon glyphicon-plus"></span></button>
+                        <button ng-repeat="item in filter.terms | filter:filterFunction | orderBy:'term'" class="btn btn-default btn-sm" ng-click="selectItem(item)">{{item.term}} ({{item.count}}) <span class="glyphicon glyphicon-plus"></span></button>
                     </div>
                 </div>
                 <div class="panel-group col-lg-6">
                     <div class="fixed-panel">
-                        <button ng-repeat="item in selectedItems | orderBy:'term'" class="btn btn-default" ng-click="deselectItem(item)">{{item.term}} <span class="glyphicon glyphicon-minus"></span></button>
+                        <button ng-repeat="item in selectedItems | orderBy:'term'" class="btn btn-default btn-sm" ng-click="deselectItem(item)">{{item.term}} <span class="glyphicon glyphicon-minus"></span></button>
                     </div>
                 </div>
             </div>
