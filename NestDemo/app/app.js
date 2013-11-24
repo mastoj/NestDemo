@@ -49,7 +49,7 @@
         };
     }
 
-    function SearchCtrl($scope, $http, toastr) {
+    function SearchCtrl($scope, $http, $q, $timeout, toastr) {
         $scope.search = {
             Query: "",
             Filter: {},
@@ -85,10 +85,27 @@
             selectedItems.splice(index, 1);
         };
 
-        $scope.$watch('search', function () {
-            $http.post("api/search", $scope.search).success(function (data) {
+        var doSearch = function() {
+            $http.post("api/search", $scope.search).success(function(data) {
                 $scope.searchResult = data;
             });
+        };
+
+        var timeout;
+        var later = null;
+        $scope.$watch('search', function () {
+            if (!timeout) {
+                doSearch();
+                timeout = $timeout(function() {
+                    timeout = null;
+                    if (later) {
+                        later();
+                    }
+                    later = null;
+                }, 500);
+            } else {
+                later = function() { doSearch(); };
+            }
         }, true);
     }
 })();

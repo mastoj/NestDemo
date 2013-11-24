@@ -48,6 +48,7 @@
                     <button ng-hide="showFilter" ng-click="showFilter = true" class="btn btn-default">Filter <span class="glyphicon glyphicon-chevron-down"></span></button>
                     <button ng-show="showFilter" ng-click="showFilter = false" class="btn btn-default">Filter <span class="glyphicon glyphicon-chevron-up"></span></button>
                 </div>
+                <p>Showing {{searchResult.documents.length}} of {{searchResult.hits.total}}</p>
             </div>
         </div>
         <div ng-show="showFilter" class="row">
