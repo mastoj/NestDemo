@@ -5,6 +5,8 @@ VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestDemo", "NestDemo\NestDemo.csproj", "{F7C67B1B-8494-433A-9481-00DDAB978C9E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NestDemo.SelfHost", "NestDemo.SelfHost\NestDemo.SelfHost.csproj", "{8EDA500C-5EE8-48C8-B462-F40745AA6EF9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{F7C67B1B-8494-433A-9481-00DDAB978C9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7C67B1B-8494-433A-9481-00DDAB978C9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7C67B1B-8494-433A-9481-00DDAB978C9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDA500C-5EE8-48C8-B462-F40745AA6EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDA500C-5EE8-48C8-B462-F40745AA6EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDA500C-5EE8-48C8-B462-F40745AA6EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDA500C-5EE8-48C8-B462-F40745AA6EF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

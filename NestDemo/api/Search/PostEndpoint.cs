@@ -10,7 +10,7 @@ using Simple.Web.Behaviors;
 
 namespace NestDemo.api.Search
 {
-    [UriTemplate("/api/search")] //"?Query={Query}")]
+    [UriTemplate("/api/search")]
     public class PostEndpoint : IPost, IOutput<IQueryResponse<Customer>>, IInput<SearchModel>
     {
         private ElasticClientWrapper _client;
