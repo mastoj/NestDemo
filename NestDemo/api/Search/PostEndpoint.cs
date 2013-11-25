@@ -37,7 +37,7 @@ namespace NestDemo.api.Search
                         if (Input.Filter.Count > 0)
                         {
                             var filters = Input.Filter.Select(_ => FilterDesc[_.Key](_.Value)).ToArray();
-                            fq.Filter(sel => sel.And(filters));
+                            fq.Filter(sel => sel.Bool(bf => bf.Must(filters)));
                         }
 
                     })).Size(Input.NumberToTake.Value);
