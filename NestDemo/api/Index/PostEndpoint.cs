@@ -27,7 +27,7 @@ namespace NestDemo.CreateIndex
         public void CreateIndex()
         {
             var customers = _customerRepo.GetCustomers();
-            var nextIndex = GetIndex(offset: 1);
+            var nextIndex = GetNextIndex();
 
             _client.CreateIndex(nextIndex, s => s.AddMapping<Customer>(m => m.MapFromAttributes()));
             _client.IndexMany(customers, nextIndex);
@@ -48,10 +48,10 @@ namespace NestDemo.CreateIndex
             }
         }
 
-        private string GetIndex(int offset)
+        private string GetNextIndex()
         {
             var indexNumber = GetCurrentIndexNumber();
-            return Settings.Alias + "_" + (indexNumber + offset);
+            return Settings.Alias + "_" + (indexNumber + 1);
         }
 
         private int GetCurrentIndexNumber()

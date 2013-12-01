@@ -39,9 +39,7 @@ namespace NestDemo.api.Search
                             var filters = Input.Filter.Select(_ => FilterDesc[_.Key](_.Value)).ToArray();
                             fq.Filter(sel => sel.Bool(bf => bf.Must(filters)));
                         }
-
                     })).Size(Input.NumberToTake.Value);
-
 
             Func<SearchDescriptor<Customer>, SearchDescriptor<Customer>> facetDescriptor = fd =>
             {
