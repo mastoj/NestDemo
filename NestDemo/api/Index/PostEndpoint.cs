@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Nest;
 using NestDemo.ElasticSearch;
 using NestDemo.Model;
 using Simple.Web;
@@ -32,20 +34,14 @@ namespace NestDemo.CreateIndex
             _client.CreateIndex(nextIndex, s => s.AddMapping<Customer>(m => m.MapFromAttributes()));
             _client.IndexMany(customers, nextIndex);
 
-            _client.Alias(nextIndex, Settings.Alias);
-            CleanUpIndices(nextIndex);
+            SetAlias(nextIndex, Settings.Alias);
         }
 
-        private void CleanUpIndices(string indexToExclude)
+        private void SetAlias(string nextIndex, string @alias)
         {
             var indicesForAlias = _client.GetIndicesPointingToAlias(Settings.Alias).ToList();
-            foreach (var index in indicesForAlias)
-            {
-                if (index != indexToExclude)
-                {
-                    _client.DeleteIndex(index);
-                }
-            }
+            var newIndices = new[] {nextIndex};
+            _client.Swap(@alias, indicesForAlias, newIndices);
         }
 
         private string GetNextIndex()

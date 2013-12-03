@@ -66,7 +66,8 @@ namespace NestDemo.api.Search
             return Filter<Customer>.Terms(propExpr, items.ToArray());
         }
 
-        private static BaseFilter AddProductsFilter(IEnumerable<string> items, Expression<Func<Customer, object>> propExpr)
+        private static BaseFilter AddProductsFilter(IEnumerable<string> items, 
+            Expression<Func<Customer, object>> propExpr)
         {
             return Filter<Customer>.Nested(sel => sel
                 .Path(c => c.Products)
