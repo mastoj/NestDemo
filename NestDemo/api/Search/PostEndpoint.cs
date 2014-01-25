@@ -33,13 +33,12 @@ namespace NestDemo.api.Search
                                     .Should(new Func<QueryDescriptor<Customer>, BaseQuery>[]
                                     {
                                         _ => _.Match(__ => __.OnField("_all").QueryString(Input.Query)),
-                                        _ =>
-                                            _.Fuzzy(
-                                                __ =>
-                                                    __.OnField("_all")
-                                                        .Boost(0.1)
-                                                        .MinSimilarity(0.6)
-                                                        .PrefixLength(1).Value(Input.Query))
+                                        _ => _.Fuzzy(__ => __
+                                            .OnField("_all")
+                                            .Boost(0.1)
+                                            .MinSimilarity(0.6)
+                                            .PrefixLength(1)
+                                            .Value(Input.Query))
                                     })));
                         }
                         else

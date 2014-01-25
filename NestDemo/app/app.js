@@ -1,7 +1,7 @@
 (function() {
 
     'use strict';
-    var app = angular.module('app', ['ngRoute']);
+    var app = angular.module('app', ['ngRoute', 'ngSanitize']);
 
     app.config(['$routeProvider' ,function($routeProvider) {
         $routeProvider.
@@ -91,21 +91,9 @@
             });
         };
 
-        var timeout;
-        var later = null;
+        var debouncedSearch = _.debounce(doSearch, 500);
         $scope.$watch('search', function () {
-            if (!timeout) {
-                doSearch();
-                timeout = $timeout(function() {
-                    timeout = null;
-                    if (later) {
-                        later();
-                    }
-                    later = null;
-                }, 500);
-            } else {
-                later = function() { doSearch(); };
-            }
+            debouncedSearch();
         }, true);
     }
 })();
