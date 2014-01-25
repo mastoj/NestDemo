@@ -37,11 +37,12 @@ namespace NestDemo.CreateIndex
             SetAlias(nextIndex, Settings.Alias);
         }
 
-        private void SetAlias(string nextIndex, string @alias)
+        private void SetAlias(string nextIndex, string alias)
         {
             var indicesForAlias = _client.GetIndicesPointingToAlias(Settings.Alias).ToList();
             var newIndices = new[] {nextIndex};
-            _client.Swap(@alias, indicesForAlias, newIndices);
+            _client = new ElasticClientWrapper();
+            _client.Swap(alias, indicesForAlias, newIndices);
         }
 
         private string GetNextIndex()
