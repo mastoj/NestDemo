@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using NestDemo.CreateIndex;
 using NestDemo.ElasticSearch;
 using Simple.Web;
 

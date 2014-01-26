@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Nest;
+﻿using System.Linq;
 using NestDemo.ElasticSearch;
 using NestDemo.Model;
 using Simple.Web;
