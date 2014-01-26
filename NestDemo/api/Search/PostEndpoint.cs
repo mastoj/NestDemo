@@ -42,7 +42,10 @@ namespace NestDemo.api.Search
                         .OnFields(new Action<HighlightFieldDescriptor<Customer>>[]
                         {
                             _ => _.OnField(c => c.CompanyName).NumberOfFragments(1).FragmentSize(100)
-                        })));
+                        }))
+                    .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].ProductName).Size(1000))
+                    .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000))
+                    .FacetTerm(f => f.OnField(c => c.Country).Size(1000)));
 
             return Status.OK;
         }
