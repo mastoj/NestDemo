@@ -22,13 +22,20 @@ namespace NestDemo.api.Search
 
         public Status Post()
         {
-            Output = _client.Search<Customer>(sd => sd
+            Output = 
+            _client.Search<Customer>(sd => sd
                 .Query(q => q
-                    .Fuzzy(fd => fd
-                        .OnField("_all")
-                        .MinSimilarity(0.6)
-                        .PrefixLength(1)
-                        .Value(Input.Query))));
+                    .Bool(b => b
+                        .Should(new Func<QueryDescriptor<Customer>, BaseQuery>[]
+                        {
+                            _ => _.Match(m => m.OnField("_all").QueryString(Input.Query)),
+                            _ => _.Fuzzy(fd => fd
+                                .OnField("_all")
+                                .MinSimilarity(0.6)
+                                .PrefixLength(1)
+                                .Value(Input.Query)
+                                .Boost(0.1))
+                        }))));
 
             return Status.OK;
         }
