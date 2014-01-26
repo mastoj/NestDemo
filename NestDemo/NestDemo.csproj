@@ -80,7 +80,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="api\Search\PostEndpoint.cs" />
     <Compile Include="api\Index\DeleteEndpoint.cs" />
     <Compile Include="AppBuilder.cs" />
     <Compile Include="Settings.cs" />
