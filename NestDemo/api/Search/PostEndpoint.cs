@@ -28,27 +28,6 @@ namespace NestDemo.api.Search
             return Status.OK;
         }
 
-        public Dictionary<string, Func<IEnumerable<string>, BaseFilter>> FilterDesc =
-            new Dictionary<string, Func<IEnumerable<string>, BaseFilter>>()
-            {
-                { "products.productName", ps => AddProductsFilter(ps, c => c.Products[0].ProductName) },
-                { "products.categoryName", cs => AddProductsFilter(cs, c => c.Products[0].CategoryName) },
-                { "country", cs => AddCustomerFilter(cs, c => c.Country)}
-            };
-
-        private static BaseFilter AddCustomerFilter(IEnumerable<string> items, Expression<Func<Customer, object>> propExpr)
-        {
-            return Filter<Customer>.Terms(propExpr, items.ToArray());
-        }
-
-        private static BaseFilter AddProductsFilter(IEnumerable<string> items, 
-            Expression<Func<Customer, object>> propExpr)
-        {
-            return Filter<Customer>.Nested(sel => sel
-                .Path(c => c.Products)
-                .Query(q => q.Terms(propExpr, items.ToArray())));
-        }
-
         public IQueryResponse<Customer> Output { get; private set; }
         public SearchModel Input { set; private get; }
     }
