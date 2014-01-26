@@ -22,20 +22,27 @@ namespace NestDemo.api.Search
 
         public Status Post()
         {
-            Output = 
-            _client.Search<Customer>(sd => sd
-                .Query(q => q
-                    .Bool(b => b
-                        .Should(new Func<QueryDescriptor<Customer>, BaseQuery>[]
+            Output =
+                _client.Search<Customer>(sd => sd
+                    .Query(q => q
+                        .Bool(b => b
+                            .Should(new Func<QueryDescriptor<Customer>, BaseQuery>[]
+                            {
+                                _ => _.Match(m => m.OnField("_all").QueryString(Input.Query)),
+                                _ => _.Fuzzy(fd => fd
+                                    .OnField("_all")
+                                    .MinSimilarity(0.6)
+                                    .PrefixLength(1)
+                                    .Value(Input.Query)
+                                    .Boost(0.1))
+                            })))
+                    .Highlight(h => h
+                        .PreTags("<span class='highlight'>")
+                        .PostTags("</span>")
+                        .OnFields(new Action<HighlightFieldDescriptor<Customer>>[]
                         {
-                            _ => _.Match(m => m.OnField("_all").QueryString(Input.Query)),
-                            _ => _.Fuzzy(fd => fd
-                                .OnField("_all")
-                                .MinSimilarity(0.6)
-                                .PrefixLength(1)
-                                .Value(Input.Query)
-                                .Boost(0.1))
-                        }))));
+                            _ => _.OnField(c => c.CompanyName).FragmentSize(1).FragmentSize(100)
+                        })));
 
             return Status.OK;
         }
