@@ -41,7 +41,7 @@ namespace NestDemo.api.Search
                         .PostTags("</span>")
                         .OnFields(new Action<HighlightFieldDescriptor<Customer>>[]
                         {
-                            _ => _.OnField(c => c.CompanyName).FragmentSize(1).FragmentSize(100)
+                            _ => _.OnField(c => c.CompanyName).NumberOfFragments(1).FragmentSize(100)
                         })));
 
             return Status.OK;
