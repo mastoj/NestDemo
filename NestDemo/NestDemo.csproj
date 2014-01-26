@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="api\Index\DeleteEndpoint.cs" />
+    <Compile Include="api\Search\PostEndpoint.cs" />
     <Compile Include="AppBuilder.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Model\CustomerRepository.cs" />
