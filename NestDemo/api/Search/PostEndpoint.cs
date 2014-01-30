@@ -25,43 +25,34 @@ namespace NestDemo.api.Search
             Output =
                 _client.Search<Customer>(sd => sd
                     .Query(q => q
-                        .Filtered(fq =>
-                        {
-                            fq.Query(qs =>
-                            {
-                                if (!string.IsNullOrEmpty(Input.Query))
-                                {
-                                    qs.Bool(b => b
-                                        .Should(new Func<QueryDescriptor<Customer>, BaseQuery>[]
-                                        {
-                                            _ => _.Match(m => m.OnField("_all").QueryString(Input.Query)),
-                                            _ => _.Fuzzy(fd => fd
-                                                .OnField("_all")
-                                                .MinSimilarity(0.6)
-                                                .PrefixLength(1)
-                                                .Value(Input.Query)
-                                                .Boost(0.1))
-                                        }));
-                                }
-                                else
-                                {
-                                    qs.MatchAll();
-                                }
-                                return qs;
-                            });
-                            if (Input.Filter.Count > 0)
-                            {
-                                var filters = Input.Filter.Select(_ => FilterDesc[_.Key](_.Value)).ToArray();
-                                fq.Filter(fs => fs.Bool(bf => bf.Must(filters)));
-                            }
-                        }))
+                        .Filtered(fq => fq
+                            .Query(qs => 
+                                // if Input.Query is null or empty neither the match or fuzzy will be 'rendered'
+                                // thus acting as a match_all as fall back
+                                // in the next version of Nest you can wrap this inside a q.Conditionless() 
+                                // and choose another fallback instead of nothing (match_all effectively)
+                                qs.Match(m => m.OnField("_all").QueryString(Input.Query)) ||
+                                qs.Fuzzy(fd => fd
+                                    .OnField("_all")
+                                    .MinSimilarity(0.6)
+                                    .PrefixLength(1)
+                                    .Value(Input.Query)
+                                    .Boost(0.1)
+                                )
+                            )
+                            //Here we aggrate to one BaseFilter with &=
+                            //If Input.Filters has more then one it will 'render' a bool
+                            //If it only has one it will 'render' that filter directly (without wrapping it in a bool)
+                            //If its empty the filter won't be rendered effectively doing a match_all (just as with query).
+                            .Filter(f=> Input.Filter.Aggregate(new BaseFilter(),(s,ff)=>s &= FilterDesc[ff.Key](ff.Value)))
+                        )
+                    )
                     .Highlight(h => h
                         .PreTags("<span class='highlight'>")
                         .PostTags("</span>")
-                        .OnFields(new Action<HighlightFieldDescriptor<Customer>>[]
-                        {
+                        .OnFields(
                             _ => _.OnField(c => c.CompanyName).NumberOfFragments(1).FragmentSize(100)
-                        }))
+                        ))
                     .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].ProductName).Size(1000))
                     .FacetTerm(f => f.Nested(c => c.Products).OnField(c => c.Products[0].CategoryName).Size(1000))
                     .FacetTerm(f => f.OnField(c => c.Country).Size(1000)));
