@@ -22,6 +22,7 @@ namespace NestDemo.api.Search
 
         public Status Post()
         {
+            Input.Query = string.IsNullOrEmpty(Input.Query) ? null : Input.Query;
             Output =
                 _client.Search<Customer>(sd => sd
                     .Query(q => q
@@ -31,7 +32,7 @@ namespace NestDemo.api.Search
                                 // thus acting as a match_all as fall back
                                 // in the next version of Nest you can wrap this inside a q.Conditionless() 
                                 // and choose another fallback instead of nothing (match_all effectively)
-                                qs.Match(m => m.OnField("_all").QueryString(Input.Query)) ||
+                                qs.Match(m => m.OnField("_all").Query(Input.Query)) ||
                                 qs.Fuzzy(fd => fd
                                     .OnField("_all")
                                     .MinSimilarity(0.6)
